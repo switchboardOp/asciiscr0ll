@@ -1,8 +1,4 @@
-body {
-  padding: 0;
-  margin: 0;
-  font-family: 'VT323', monospace;
-  line-height: .5em;
-  background: black;
-  color: white;
-}
+@import url(https://fonts.googleapis.com/css?family=VT323);
+body {background: black; color: white; overflow:hidden;}
+pre{font-family: 'VT323', monospace; margin:0; padding:0;}
+canvas{display:none;}
