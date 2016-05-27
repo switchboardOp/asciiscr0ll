@@ -70,8 +70,8 @@ function initLines(){
 }
 
 // some functions to allow pausing
-function touchStarted() {noLoop();}
-function touchEnded() {loop();}
+function touchStarted() {noLoop(); paused = true;}
+function touchEnded() {loop(); paused = false;}
 function keyPressed() {
   console.log(key);
   
