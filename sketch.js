@@ -1,7 +1,6 @@
-var data, rows;
+var data, rows, run;
 var lineArray = [];
 var index = 0;
-var run = false;
 var paused = false;
 
 //modify these as needed
@@ -14,14 +13,25 @@ function preload() {
 
 function setup() {
   frameRate(fr);
-  
+  initMenu();
+
   button = createButton('- let the good times scroll -');
   button.mousePressed(initLines);
+  button.parent('menu');
   
   // file input, passes file to process()
   if (window.File && window.FileReader && window.FileList && window.Blob) {
     input = createFileInput(process);
+    input.parent('menu');
   }
+}
+
+function initMenu() {
+  run = false;
+  noLoop();
+  select("#menu").show();
+  //button.show();
+  //input.show();
 }
 
 function process(file) {
@@ -32,6 +42,7 @@ function process(file) {
     data = file.data.split("\n");
     initLines();
   }
+  index = 0;
 }
 
 function draw() {
@@ -52,10 +63,8 @@ function printLine(data, i) {
 }
 
 function initLines(){
-  // clear the DOM
-  select('#about').remove();
-  button.remove();
-  input.remove();
+  // clear the Menu
+  select('#menu').hide();
   
   //initialize the DOM for scrollin'
   rows = ceil(displayHeight/lineheight);
@@ -67,13 +76,25 @@ function initLines(){
     line.style("line-height", lineheight + "px");
   }
   run = true;
+  loop();
 }
 
-// some functions to allow pausing
-function touchStarted() {noLoop(); paused = true;}
-function touchEnded() {loop(); paused = false;}
+// pausing is weird on mobile
+// function touchStarted() {noLoop(); paused = true;}
+// function touchEnded() {loop(); paused = false;}
+
 function keyPressed() {
-  console.log(key);
+  //console.log(key);
+  // pause with P or spacebar
+  if (key == "P" || key == " ") {
+    if (paused == false) {
+      paused = true;
+      noLoop();
+    } else if (paused == true) {
+      paused = false;
+      loop();
+    }
+  }
   
   // change framerate with arrows (might be buggy)
   if (key == "&") {
@@ -83,15 +104,12 @@ function keyPressed() {
     fr--;
     frameRate(fr);
   }
-  
-  // pause with P or spacebar
-  if (key == "P" || key == " ") {
-    if (paused == false) {
-      paused = true;
-      noLoop();
-    } else if (paused == true) {
-      paused = false;
-      loop();
+  // go back to menu
+  if (key == "X") {
+    if (run == true) {
+      initMenu();
+    } else if (run == false) {
+      initLines();
     }
   }
 }
