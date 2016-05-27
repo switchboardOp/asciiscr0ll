@@ -17,16 +17,20 @@ function setup() {
   button = createButton('- let the good times scroll -');
   button.mousePressed(initLines);
   
-  // file input
+  // file input, passes file to process()
   if (window.File && window.FileReader && window.FileList && window.Blob) {
     input = createFileInput(process);
-    input.id("userData");
   }
 }
 
 function process(file) {
-  data = file.data.split("\n");
-  initLines();
+  var re = /(\.txt)$/i;
+  if(!re.exec(file.name)){
+    alert("Only .TXT files are currently supported.");
+  } else {
+    data = file.data.split("\n");
+    initLines();
+  }
 }
 
 function draw() {
@@ -51,7 +55,6 @@ function initLines(){
   select('#about').remove();
   button.remove();
   input.remove();
-  run = true;
   
   //initialize the DOM for scrollin'
   rows = ceil(displayHeight/lineheight);
@@ -62,4 +65,5 @@ function initLines(){
     line.parent('#scroll').id(lineId);
     line.style("line-height", lineheight + "px");
   }
+  run = true;
 }
