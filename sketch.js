@@ -1,7 +1,8 @@
-var data, rows, run;
+var data, rows;
 var lineArray = [];
 var index = 0;
 var paused = false;
+var run = false;
 
 //modify these as needed
 var fr = 30;
@@ -13,8 +14,9 @@ function preload() {
 
 function setup() {
   frameRate(fr);
-  initMenu();
+  showMenu();
 
+  // create the button
   button = createButton('- let the good times scroll -');
   button.mousePressed(initLines);
   button.parent('menu');
@@ -26,12 +28,10 @@ function setup() {
   }
 }
 
-function initMenu() {
+function showMenu() {
+  select("#menu").show();
   run = false;
   noLoop();
-  select("#menu").show();
-  //button.show();
-  //input.show();
 }
 
 function process(file) {
@@ -40,9 +40,9 @@ function process(file) {
     alert("Only .TXT files are currently supported.");
   } else {
     data = file.data.split("\n");
+    index = 0;
     initLines();
   }
-  index = 0;
 }
 
 function draw() {
@@ -63,7 +63,7 @@ function printLine(data, i) {
 }
 
 function initLines(){
-  // clear the Menu
+  // clear the menu
   select('#menu').hide();
   
   //initialize the DOM for scrollin'
@@ -84,7 +84,6 @@ function initLines(){
 // function touchEnded() {loop(); paused = false;}
 
 function keyPressed() {
-  //console.log(key);
   // pause with P or spacebar
   if (key == "P" || key == " ") {
     if (paused == false) {
@@ -104,10 +103,11 @@ function keyPressed() {
     fr--;
     frameRate(fr);
   }
+  
   // go back to menu
   if (key == "X") {
     if (run == true) {
-      initMenu();
+      showMenu();
     } else if (run == false) {
       initLines();
     }
