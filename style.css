@@ -1,4 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=VT323);
-body {background: black; color: white; overflow:hidden;}
-pre{font-family: 'VT323', monospace; margin:0; padding:0;}
+body {background: black; color: white; overflow:hidden;top:0; font-family: 'VT323', monospace;}
+pre{font-family: inherit; margin:0; padding:0;}
 canvas{display:none;}
+@media screen and (max-width: 768px) {
+    pre {font-size:.7em;}
+}
+ul{list-style-type:decimal-leading-zero;}
+a {color:green;}
+button, input{margin: 10px 40px; display:block;}
