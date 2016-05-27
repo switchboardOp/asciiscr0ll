@@ -2,6 +2,7 @@ var data, rows;
 var lineArray = [];
 var index = 0;
 var run = false;
+var paused = false;
 
 //modify these as needed
 var fr = 30;
@@ -66,4 +67,31 @@ function initLines(){
     line.style("line-height", lineheight + "px");
   }
   run = true;
+}
+
+// some functions to allow pausing
+function touchStarted() {noLoop();}
+function touchEnded() {loop();}
+function keyPressed() {
+  console.log(key);
+  
+  // change framerate with arrows (might be buggy)
+  if (key == "&") {
+    fr++;
+    frameRate(fr);
+  } else if (key == "(") {
+    fr--;
+    frameRate(fr);
+  }
+  
+  // pause with P or spacebar
+  if (key == "P" || key == " ") {
+    if (paused == false) {
+      paused = true;
+      noLoop();
+    } else if (paused == true) {
+      paused = false;
+      loop();
+    }
+  }
 }
