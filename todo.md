@@ -1,3 +1,4 @@
-credits
-start prompt
-load choice of data files
+- [x] update credits
+- [x] start prompt
+- [ ] load choice of data files
+- [ ] convert uploaded image
